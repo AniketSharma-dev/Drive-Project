@@ -6,6 +6,7 @@ dotenv.config();
 const connectToDB = require("./config/db");
 connectToDB();
 
+
 const PORT = 3000;
 
 app.use(express.json());
