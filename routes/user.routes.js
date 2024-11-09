@@ -2,6 +2,7 @@ const express = require("express");
 const { body, validationResult } = require("express-validator");
 const userModel = require("../models/user.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -75,6 +76,19 @@ router.post(
         message: "username or password is incorrect",
       });
     }
+
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        email: user.email,
+        username: user.name,
+      },
+      process.env.JWT_SECRET
+    );
+
+    res.json({
+      token,
+    });
   }
 );
 
