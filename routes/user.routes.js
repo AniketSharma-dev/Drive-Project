@@ -35,7 +35,8 @@ router.post(
       password: hashPassword,
     });
 
-    res.json(newUser);
+    // res.json(newUser);
+    res.send('Logged In')
   }
 );
 
