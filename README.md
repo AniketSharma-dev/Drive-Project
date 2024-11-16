@@ -27,8 +27,8 @@ This project is a simple Node.js/Express application providing user registration
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AniketSharma-dev/your-repo-name.git
-   cd your-repo-name
+   git clone https://github.com/AniketSharma-dev/Drive-Project.git
+   cd Drive-Project
    ```
 
 2. Install dependencies:
