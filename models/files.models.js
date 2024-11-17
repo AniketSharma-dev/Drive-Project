@@ -5,8 +5,16 @@ const fileSchema = new mongoose.Schema({
     type: String,
     required: [true, "Path is required"],
   },
-  originFile: {
+  originalname: {
     type: String,
-    required: [true, "Path is required"],
+    required: [true, "Originalname is required"],
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
+    required: [true, "User is required"],
   },
 });
+
+const file = mongoose.model("file", fileSchema);
+module.exports = file;
