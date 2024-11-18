@@ -16,7 +16,10 @@ router.post(
     const newFile = await fileModel.create({
       path: req.file.path,
       originalname: req.file.originalname,
+      user: req.user.userId,
     });
+
+    res.json(newFile);
   }
 );
 
