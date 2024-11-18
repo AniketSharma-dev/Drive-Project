@@ -9,12 +9,17 @@ function auth(req, res, next) {
     });
   }
 
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  try{
+    res.user = decoded;
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    
-  }catch(err){
-
+    return next();
+  } catch (err) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
   }
 }
+
+module.exports = auth;
