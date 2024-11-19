@@ -23,11 +23,9 @@ router.post(
   async (req, res) => {
     const newFile = await fileModel.create({
       path: req.file.path,
-      originalname: req.file.originalname,
+      originalName: req.file.originalname,
       user: req.user.userId,
     });
-    // console.log(res.users);
-
     res.json(newFile);
   }
 );
