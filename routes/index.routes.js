@@ -4,8 +4,16 @@ const upload = require("../config/multer.config");
 const router = express.Router();
 const fileModel = require("../models/files.models");
 
-router.get("/home", authMiddleware, (req, res) => {
-  res.render("home");
+router.get("/home", authMiddleware, async (req, res) => {
+  const userFiles = await fileModel.find({
+    user: req.user.userId,
+  });
+
+  // console.log(userFiles);
+
+  res.render("home", {
+    files: userFiles,
+  });
 });
 
 router.post(

@@ -5,7 +5,7 @@ const fileSchema = new mongoose.Schema({
     type: String,
     required: [true, "Path is required"],
   },
-  originalname: {
+  originalName: {
     type: String,
     required: [true, "Originalname is required"],
   },
