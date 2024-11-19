@@ -18,6 +18,7 @@ router.post(
       originalname: req.file.originalname,
       user: req.user.userId,
     });
+    // console.log(res.users);
 
     res.json(newFile);
   }
