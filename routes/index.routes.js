@@ -3,6 +3,7 @@ const authMiddleware = require("../middlewares/authe");
 const upload = require("../config/multer.config");
 const router = express.Router();
 const fileModel = require("../models/files.models");
+const file = require("../models/files.models");
 
 router.get("/home", authMiddleware, async (req, res) => {
   const userFiles = await fileModel.find({
@@ -29,5 +30,22 @@ router.post(
     res.json(newFile);
   }
 );
+
+router.get("/download/:path", authMiddleware, async (req, res) => {
+  const loggedInUserId = req.user.userId;
+
+  const path = req.params.path;
+
+  const file = await fileModel.findOne({
+    user: loggedInUserId,
+    path: path,
+  });
+
+  if (!file) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
+  }
+});
 
 module.exports = router;
