@@ -1,4 +1,4 @@
-   # Drive Project
+# Drive Project
 
 This project is a simple Node.js/Express application providing user registration and login functionality, along with file upload and management capabilities. It uses **MongoDB** for data storage, **Express.js** for server handling, **EJS** for templating, and **TailwindCSS** along with **Flowbite** for styling the frontend.
 
