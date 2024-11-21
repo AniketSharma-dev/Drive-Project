@@ -87,14 +87,17 @@
 
       <div class="files flex flex-col gap-2">
         <% files.forEach((file)=>{ %>
-        <div class=" flex justify-between items-center px-12 py-2 cursor-pointer rounded-md bg-gray-300 bg-gray-700">
+        <div
+          class="flex justify-between items-center px-12 py-2 cursor-pointer rounded-md bg-gray-300 bg-gray-700"
+        >
           <h1 class="text-xl"><%= file.originalName %></h1>
-          <a 
-          class="text-blue-400 text-2xl  hover:text-blue-200"
-            href="/download/<%= file.path %>"
+          <a
+            class="text-blue-400 text-2xl hover:text-blue-200"
+            href="<%= file.path.replace('/upload/', '/upload/fl_attachment:') %>"
             download="<%= file.originalName %>"
-            ><i class="ri-download-fill"></i
-          ></a>
+          >
+            <i class="ri-download-fill"></i>
+          </a>
         </div>
         <% }) %>
       </div>
