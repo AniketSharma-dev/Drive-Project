@@ -51,7 +51,7 @@ router.get("/download/:path", authMiddleware, async (req, res) => {
 
   const cloudinaryUrl = cloudinary.v2.url(fileDoc.path, {
     sign_url: true,
-    expires_at: Math.floor(Date.now() / 1000) + 3600, // URL expires in 1 hour
+    expires: Date.now() + 60 * 3600,
   });
 
   res.redirect(cloudinaryUrl);

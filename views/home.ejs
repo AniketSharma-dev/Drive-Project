@@ -93,7 +93,7 @@
           <h1 class="text-xl"><%= file.originalName %></h1>
           <a
             class="text-blue-400 text-2xl hover:text-blue-200"
-            href="<%= file.path.replace('/upload/', '/upload/fl_attachment:') %>"
+            href="/download/<%= file.path %>"
             download="<%= file.originalName %>"
           >
             <i class="ri-download-fill"></i>
