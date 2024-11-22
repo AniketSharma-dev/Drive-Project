@@ -49,15 +49,12 @@ router.get("/download/:path", authMiddleware, async (req, res) => {
     });
   }
 
-  // Serve the file for download
-  res.download(fileDoc.path, fileDoc.originalName, (err) => {
-    if (err) {
-      console.error("Error downloading the file:", err);
-      return res.status(500).json({
-        message: "Error downloading the file",
-      });
-    }
+  const cloudinaryUrl = cloudinary.v2.url(fileDoc.path, {
+    sign_url: true,
+    expires_at: Math.floor(Date.now() / 1000) + 3600, // URL expires in 1 hour
   });
+
+  res.redirect(cloudinaryUrl);
 });
 
 module.exports = router;
