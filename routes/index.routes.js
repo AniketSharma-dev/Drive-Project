@@ -32,9 +32,10 @@ router.post(
   }
 );
 
+
+
 router.get("/download/:path", authMiddleware, async (req, res) => {
   const loggedInUserId = req.user.userId;
-
   const path = req.params.path;
 
   // Find the file in the database for the logged-in user
@@ -49,12 +50,9 @@ router.get("/download/:path", authMiddleware, async (req, res) => {
     });
   }
 
-  const cloudinaryUrl = cloudinary.v2.url(fileDoc.path, {
-    sign_url: true,
-    expires: Date.now() + 60 * 3600,
-  });
-
-  res.redirect(cloudinaryUrl);
+  // Redirect to the stored Cloudinary URL
+  res.redirect(fileDoc.path); // Assume `fileDoc.path` contains the full Cloudinary URL
 });
+
 
 module.exports = router;
