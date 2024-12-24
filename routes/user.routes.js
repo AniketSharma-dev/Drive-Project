@@ -6,10 +6,12 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
+// Register Page
 router.get("/register", (req, res) => {
   res.render("register");
 });
 
+// Handle User Registration
 router.post(
   "/register",
   body("email").trim().isEmail().isLength({ min: 13 }),
@@ -27,6 +29,14 @@ router.post(
 
     const { email, password, username } = req.body;
 
+     // Check if email already exists
+     const existingUser = await userModel.findOne({ email });
+     if (existingUser) {
+       return res.status(400).json({
+         message: "Email already registered",
+       });
+     }
+
     const hashPassword = await bcrypt.hash(password, 10);
 
     const newUser = await userModel.create({
@@ -40,10 +50,12 @@ router.post(
   }
 );
 
+// Login Page
 router.get("/login", (req, res) => {
   res.render("login");
 });
 
+// Handle User Login  
 router.post(
   "/login",
   body("username").trim().isLength({ min: 3 }),
@@ -51,7 +63,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
 
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
       return res.status(400).json({
         errors: errors.array(),
         message: "Invalid Data",
@@ -84,12 +96,15 @@ router.post(
         email: user.email,
         username: user.name,
       },
-      process.env.JWT_SECRET
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
     );
 
     res.cookie("token", token);
 
     res.send('Logged In')
+    res.redirect("/home");
+
   }
 );
 

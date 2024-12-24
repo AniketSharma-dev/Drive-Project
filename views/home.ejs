@@ -91,16 +91,32 @@
           class="flex justify-between items-center px-12 py-2 cursor-pointer rounded-md bg-gray-300 bg-gray-700"
         >
           <h1 class="text-xl"><%= file.originalName %></h1>
+         <div class="flex justify-between items-center w-[100px]">
           <a
-            class="text-blue-400 text-2xl hover:text-blue-200"
-            href="/download/<%= encodeURIComponent(file.path) %>"
-            target="_blank"
-          >
-            <i class="ri-download-fill"></i>
-          </a>
+          class="text-blue-400 text-2xl hover:text-blue-200"
+          href="/download/<%= encodeURIComponent(file.path) %>"
+          target="_blank"
+        >
+          <i class="ri-download-fill"></i>
+        </a>
+        <a
+          class="text-blue-400 text-2xl hover:text-blue-200"
+          onclick="return confirm('Are you sure?')"
+          href="/delete/<%= encodeURIComponent(file.path) %>"
+          target="_blank"
+        >
+         <i class="ri-delete-bin-line"></i>
+        </a>
+         </div>
+          
         </div>
         <% }); %>
+
+
+       
       </div>
+
+
     </main>
 
     <!-- Flow Bite CDN Script -->
