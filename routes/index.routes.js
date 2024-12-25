@@ -7,15 +7,14 @@ const fileModel = require("../models/files.models");
 const file = require("../models/files.models");
 
 router.get("/home", authMiddleware, async (req, res) => {
-  const userFiles = await fileModel.find({
-    user: req.user.userId,
-  });
-
-  // // console.log(userFiles);
-
-  res.render("home", {
-    files: userFiles,
-  });
+  try {
+    const userFiles = await fileModel.find({ user: req.user.userId });
+    const message = req.query.message || ''; // Extract message
+    res.render("home", { files: userFiles, message }); // Pass it to the template
+  } catch (error) {
+    console.error("Error fetching files:", error);
+    res.status(500).send("An error occurred");
+  }
 });
 
 router.post(
@@ -31,8 +30,6 @@ router.post(
     res.json(newFile);
   }
 );
-
-
 
 router.get("/download/:path", authMiddleware, async (req, res) => {
   const loggedInUserId = req.user.userId;
@@ -53,6 +50,5 @@ router.get("/download/:path", authMiddleware, async (req, res) => {
   // Redirect to the stored Cloudinary URL
   res.redirect(fileDoc.path); // Assume `fileDoc.path` contains the full Cloudinary URL
 });
-
 
 module.exports = router;

@@ -102,8 +102,8 @@ router.post(
 
     res.cookie("token", token);
 
-    res.send('Logged In')
-    res.redirect("/home");
+    res.redirect("/home?message=Logged In Successfully");
+
 
   }
 );
