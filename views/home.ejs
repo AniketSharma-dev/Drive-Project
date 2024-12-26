@@ -19,6 +19,20 @@
   </head>
   <body>
     <main class="p-4 text-white bg-gray-100 dark:bg-gray-800 w-full h-screen">
+      <div class="fixed top-4 right-4 z-50">
+        <% if (message) { %>
+        <div
+          id="toast"
+          class="w-92 p-4 bg-green-500 text-white text-center rounded-md mb-4 relative"
+        >
+          <%= message %>
+          <div
+            id="toast-timer"
+            class="absolute bottom-0 left-0 h-1 bg-white"
+          ></div>
+        </div>
+        <% } %>
+      </div>
       <div class="w-full h-[100px] flex justify-center items-center flex-col">
         <h1>Home Page</h1>
         <button
@@ -91,32 +105,26 @@
           class="flex justify-between items-center px-12 py-2 cursor-pointer rounded-md bg-gray-300 bg-gray-700"
         >
           <h1 class="text-xl"><%= file.originalName %></h1>
-         <div class="flex justify-between items-center w-[100px]">
-          <a
-          class="text-blue-400 text-2xl hover:text-blue-200"
-          href="/download/<%= encodeURIComponent(file.path) %>"
-          target="_blank"
-        >
-          <i class="ri-download-fill"></i>
-        </a>
-        <a
-          class="text-blue-400 text-2xl hover:text-blue-200"
-          onclick="return confirm('Are you sure?')"
-          href="/delete/<%= encodeURIComponent(file.path) %>"
-          target="_blank"
-        >
-         <i class="ri-delete-bin-line"></i>
-        </a>
-         </div>
-          
+          <div class="flex justify-between items-center w-[100px]">
+            <a
+              class="text-blue-400 text-2xl hover:text-blue-200"
+              href="/download/<%= encodeURIComponent(file.path) %>"
+              target="_blank"
+            >
+              <i class="ri-download-fill"></i>
+            </a>
+            <a
+              class="text-blue-400 text-2xl hover:text-blue-200"
+              onclick="return confirm('Are you sure?')"
+              href="/delete/<%= encodeURIComponent(file.path) %>"
+              target="_blank"
+            >
+              <i class="ri-delete-bin-line"></i>
+            </a>
+          </div>
         </div>
         <% }); %>
-
-
-       
       </div>
-
-
     </main>
 
     <!-- Flow Bite CDN Script -->
@@ -127,6 +135,25 @@
         const pop = document.querySelector(".pop");
 
         pop.classList.toggle("hidden");
+      }
+    </script>
+
+    <script>
+      const toast = document.getElementById("toast");
+      const toastTimer = document.getElementById("toast-timer");
+
+      if (toast && toastTimer) {
+        let width = 100;
+        const interval = setInterval(() => {
+          width -= 1;
+          toastTimer.style.width = width + "%";
+          if (width <= 0) {
+            clearInterval(interval);
+            toast.style.display = "none";
+          }
+        }, 50);
+      } else {
+        console.warn("Toast or toast-timer element is missing from the DOM.");
       }
     </script>
   </body>

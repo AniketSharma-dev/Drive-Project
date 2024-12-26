@@ -29,13 +29,13 @@ router.post(
 
     const { email, password, username } = req.body;
 
-     // Check if email already exists
-     const existingUser = await userModel.findOne({ email });
-     if (existingUser) {
-       return res.status(400).json({
-         message: "Email already registered",
-       });
-     }
+    // Check if email already exists
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        message: "Email already registered",
+      });
+    }
 
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -46,7 +46,7 @@ router.post(
     });
 
     // res.json(newUser);
-    res.send('Logged In')
+    res.send("Logged In");
   }
 );
 
@@ -55,7 +55,7 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-// Handle User Login  
+// Handle User Login
 router.post(
   "/login",
   body("username").trim().isLength({ min: 3 }),
@@ -102,9 +102,11 @@ router.post(
 
     res.cookie("token", token);
 
-    res.redirect("/home?message=Logged In Successfully");
+    // Render home page with success message
 
+    req.session.message = "Logged In Successfully";
 
+    res.redirect("/home");
   }
 );
 

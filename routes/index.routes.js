@@ -9,7 +9,8 @@ const file = require("../models/files.models");
 router.get("/home", authMiddleware, async (req, res) => {
   try {
     const userFiles = await fileModel.find({ user: req.user.userId });
-    const message = req.query.message || ''; // Extract message
+    const message = req.session.message || ''; // Extract message
+    delete req.session.message;
     res.render("home", { files: userFiles, message }); // Pass it to the template
   } catch (error) {
     console.error("Error fetching files:", error);
