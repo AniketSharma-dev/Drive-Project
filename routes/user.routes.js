@@ -110,4 +110,23 @@ router.post(
   }
 );
 
+
+
+// Logout Route
+router.get("/logout", (req, res) => {
+  // Destroy the session
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: "Failed to log out." });
+    }
+
+    // Clear the cookie (if set)
+    res.clearCookie("token");
+
+    // Redirect to home page or login page after successful logout
+    res.redirect("/user/login");
+  });
+});
+
+
 module.exports = router;

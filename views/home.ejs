@@ -17,9 +17,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
   </head>
-  <body>
+  <body class="bg-gray-100 dark:bg-gray-800 w-full h-screen">
+    <nav class="bg-gray-800 p-4 shadow-lg">
+      <div class="container mx-auto flex justify-between items-center">
+      <a href="/home" class="text-white text-2xl font-bold">Drive Project</a>
+      <div class="flex space-x-6">
+        <a href="/home" class="text-gray-300 hover:text-white transition duration-300 ease-in-out" id="home-link">Home</a>
+        <a href="/user/login" class="text-gray-300 hover:text-white transition duration-300 ease-in-out" id="login-link">Login</a>
+        <a href="/user/register" class="text-gray-300 hover:text-white transition duration-300 ease-in-out" id="register-link">Register</a>
+        <a href="/user/logout" class="text-red-500 hover:text-red-700 transition duration-300 ease-in-out font-bold">Logout</a>
+      </div>
+      </div>
+    </nav>
     <main class="p-4 text-white bg-gray-100 dark:bg-gray-800 w-full h-screen">
-      <div class="fixed top-4 right-4 z-50">
+      <div class="fixed bottom-4 right-4 z-50">
         <% if (message) { %>
         <div
           id="toast"
@@ -151,9 +162,22 @@
             clearInterval(interval);
             toast.style.display = "none";
           }
-        }, 50);
+        }, 30);
       } else {
         console.warn("Toast or toast-timer element is missing from the DOM.");
+      }
+    </script>
+
+    <script>
+      // Active tab function
+      const currentPath = window.location.pathname;
+      const navLinks = {
+        '/home': 'home-link',
+        '/user/login': 'login-link',
+        '/user/register': 'register-link'
+      };
+      if (navLinks[currentPath]) {
+        document.getElementById(navLinks[currentPath]).classList.add('text-white', 'font-bold');
       }
     </script>
   </body>
