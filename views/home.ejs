@@ -17,19 +17,64 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
   </head>
-  <body class="bg-gray-100 dark:bg-gray-800 w-full h-screen">
-    <nav class="bg-gray-800 p-4 shadow-lg">
+  <body class="bg-gray-100 dark:bg-gray-900 w-full h-screen">
+    <nav class="bg-gray-900 p-4 shadow-lg">
       <div class="container mx-auto flex justify-between items-center">
-      <a href="/home" class="text-white text-2xl font-bold">Drive Project</a>
-      <div class="flex space-x-6">
-        <a href="/home" class="text-gray-300 hover:text-white transition duration-300 ease-in-out" id="home-link">Home</a>
-        <a href="/user/login" class="text-gray-300 hover:text-white transition duration-300 ease-in-out" id="login-link">Login</a>
-        <a href="/user/register" class="text-gray-300 hover:text-white transition duration-300 ease-in-out" id="register-link">Register</a>
-        <a href="/user/logout" class="text-red-500 hover:text-red-700 transition duration-300 ease-in-out font-bold">Logout</a>
-      </div>
+        <a href="/home" class="text-white text-2xl font-bold">Drive Project</a>
+        <div class="md:hidden flex items-center space-x-4">
+          <a
+            href="/user/logout"
+            class="text-red-500 hover:text-red-700 transition duration-300 ease-in-out border border-red-500 rounded-full px-4 py-1"
+            id="logout-link"
+            >Logout</a
+          >
+          <button id="menu-button" class="text-gray-300 focus:outline-none">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div class="hidden md:flex space-x-6" id="menu">
+          <a
+            href="/home"
+            class="text-gray-300 hover:text-white transition duration-300 ease-in-out"
+            id="home-link"
+            >Home</a
+          >
+          <a
+            href="/user/login"
+            class="text-gray-300 hover:text-white transition duration-300 ease-in-out"
+            id="login-link"
+            >Login</a
+          >
+          <a
+            href="/user/register"
+            class="text-gray-300 hover:text-white transition duration-300 ease-in-out"
+            id="register-link"
+            >Register</a
+          >
+          <a
+            href="/user/logout"
+            class="text-red-500 hover:text-red-700 transition duration-300 ease-in-out font-bold"
+            >Logout</a
+          >
+        </div>
       </div>
     </nav>
-    <main class="p-4 text-white bg-gray-100 dark:bg-gray-800 w-full h-screen">
+    <main
+      class="p-4 text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-900 w-full h-screen"
+    >
       <div class="fixed bottom-4 right-4 z-50">
         <% if (message) { %>
         <div
@@ -45,7 +90,7 @@
         <% } %>
       </div>
       <div class="w-full h-[100px] flex justify-center items-center flex-col">
-        <h1>Home Page</h1>
+        <h1 class="text-3xl font-bold mb-4">Home Page</h1>
         <button
           onclick="showPopUp()"
           class="bg-blue-500 hover:bg-blue-700 rounded px-4 py-2 text-white font-bold"
@@ -57,7 +102,12 @@
       <div
         class="pop hidden backdrop-blur fixed top-0 left-0 h-screen w-full flex justify-center items-center"
       >
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form
+          action="/upload"
+          method="post"
+          enctype="multipart/form-data"
+          class="bg-white p-6 rounded-lg shadow-md dark:bg-gray-700"
+        >
           <div class="flex items-center justify-center w-96">
             <label
               for="dropzone-file"
@@ -110,10 +160,10 @@
         </form>
       </div>
 
-      <div class="files flex flex-col gap-2">
+      <div class="files flex flex-col gap-2 mt-4">
         <% files.forEach((file) => { %>
         <div
-          class="flex justify-between items-center px-12 py-2 cursor-pointer rounded-md bg-gray-300 bg-gray-700"
+          class="flex justify-between items-center px-4 py-2 cursor-pointer rounded-md bg-gray-300 dark:bg-gray-700"
         >
           <h1 class="text-xl"><%= file.originalName %></h1>
           <div class="flex justify-between items-center w-[100px]">
@@ -137,6 +187,51 @@
         <% }); %>
       </div>
     </main>
+
+    <!-- Sidebar for mobile -->
+    <div
+      id="sidebar"
+      class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden transition-transform transform translate-x-full"
+    >
+      <div class="absolute top-0 right-0 w-64 bg-gray-800 h-full shadow-lg">
+        <button id="close-sidebar" class="text-white p-4 focus:outline-none">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+        <nav class="mt-10">
+          <a
+            href="/home"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
+            id="home-link-sidebar"
+            >Home</a
+          >
+          <a
+            href="/user/login"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
+            id="login-link-sidebar"
+            >Login</a
+          >
+          <a
+            href="/user/register"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
+            id="register-link-sidebar"
+            >Register</a
+          >
+        </nav>
+      </div>
+    </div>
 
     <!-- Flow Bite CDN Script -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
@@ -172,13 +267,42 @@
       // Active tab function
       const currentPath = window.location.pathname;
       const navLinks = {
-        '/home': 'home-link',
-        '/user/login': 'login-link',
-        '/user/register': 'register-link'
+        "/home": "home-link",
+        "/user/login": "login-link",
+        "/user/register": "register-link",
       };
       if (navLinks[currentPath]) {
-        document.getElementById(navLinks[currentPath]).classList.add('text-white', 'font-bold');
+        document
+          .getElementById(navLinks[currentPath])
+          .classList.add("text-white", "font-bold");
+        document
+          .getElementById(navLinks[currentPath] + "-sidebar")
+          .classList.add("bg-gray-700", "text-white");
       }
+
+      // Hamburger menu toggle
+      const menuButton = document.getElementById("menu-button");
+      const menu = document.getElementById("menu");
+      const sidebar = document.getElementById("sidebar");
+      const closeSidebar = document.getElementById("close-sidebar");
+
+      menuButton.addEventListener("click", () => {
+        sidebar.classList.toggle("hidden");
+        sidebar.classList.toggle("translate-x-full");
+      });
+
+      closeSidebar.addEventListener("click", () => {
+        sidebar.classList.add("hidden");
+        sidebar.classList.add("translate-x-full");
+      });
+
+      // Hide hamburger menu on larger screens
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          sidebar.classList.add("hidden");
+          sidebar.classList.add("translate-x-full");
+        }
+      });
     </script>
   </body>
 </html>

@@ -12,11 +12,29 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
   </head>
-  <body class="bg-gray-100 dark:bg-gray-800 w-full h-screen">
-    <nav class="bg-gray-800 p-4 shadow-lg">
+  <body class="bg-gray-100 dark:bg-gray-900 w-full h-screen">
+    <nav class="bg-gray-900 p-4 shadow-lg">
       <div class="container mx-auto flex justify-between items-center">
         <a href="/home" class="text-white text-2xl font-bold">Drive Project</a>
-        <div class="flex space-x-6">
+        <div class="md:hidden flex items-center space-x-4">
+          <button id="menu-button" class="text-gray-300 focus:outline-none">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div class="hidden md:flex space-x-6" id="menu">
           <a
             href="/home"
             class="text-gray-300 hover:text-white transition duration-300 ease-in-out"
@@ -38,12 +56,21 @@
         </div>
       </div>
     </nav>
-    <div class="w-full h-[90%] flex justify-center items-center">
-      <form action="/user/login" method="post" class="w-1/4 max-w-sm mx-auto">
+    <div class="w-full h-[90%] flex justify-center items-center px-4">
+      <form
+        action="/user/login"
+        method="post"
+        class="w-full max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md dark:bg-gray-800"
+      >
+        <h2
+          class="text-2xl font-bold mb-6 text-gray-900 dark:text-white text-center"
+        >
+          Login
+        </h2>
         <div class="mb-5">
           <label
             for="username"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >Username</label
           >
           <input
@@ -58,7 +85,7 @@
         <div class="mb-5">
           <label
             for="password"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
             >Your password</label
           >
           <input
@@ -73,25 +100,97 @@
 
         <button
           type="submit"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
         >
           Submit
         </button>
       </form>
     </div>
+
+    <!-- Sidebar for mobile -->
+    <div
+      id="sidebar"
+      class="fixed inset-0 bg-gray-900 bg-opacity-75 z-50 hidden transition-transform transform translate-x-full"
+    >
+      <div class="absolute top-0 right-0 w-64 bg-gray-900 h-full shadow-lg">
+        <button id="close-sidebar" class="text-white p-4 focus:outline-none">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+        <nav class="mt-10">
+          <a
+            href="/home"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
+            id="home-link-sidebar"
+            >Home</a
+          >
+          <a
+            href="/user/login"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
+            id="login-link-sidebar"
+            >Login</a
+          >
+          <a
+            href="/user/register"
+            class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white"
+            id="register-link-sidebar"
+            >Register</a
+          >
+        </nav>
+      </div>
+    </div>
+
     <!-- Flow Bite CDN Script -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <script>
       // Active tab function
       const currentPath = window.location.pathname;
       const navLinks = {
-        '/home': 'home-link',
-        '/user/login': 'login-link',
-        '/user/register': 'register-link'
+        "/home": "home-link",
+        "/user/login": "login-link",
+        "/user/register": "register-link",
       };
       if (navLinks[currentPath]) {
-        document.getElementById(navLinks[currentPath]).classList.add('text-white', 'font-bold');
+        document
+          .getElementById(navLinks[currentPath])
+          .classList.add("text-white", "font-bold");
+        document
+          .getElementById(navLinks[currentPath] + "-sidebar")
+          .classList.add("bg-gray-700", "text-white");
       }
+
+      // Hamburger menu toggle
+      const menuButton = document.getElementById("menu-button");
+      const sidebar = document.getElementById("sidebar");
+      const closeSidebar = document.getElementById("close-sidebar");
+      menuButton.addEventListener("click", () => {
+        sidebar.classList.toggle("hidden");
+        sidebar.classList.toggle("translate-x-full");
+      });
+      closeSidebar.addEventListener("click", () => {
+        sidebar.classList.add("hidden");
+        sidebar.classList.add("translate-x-full");
+      });
+
+      // Hide hamburger menu on larger screens
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          sidebar.classList.add("hidden");
+          sidebar.classList.add("translate-x-full");
+        }
+      });
     </script>
   </body>
 </html>
